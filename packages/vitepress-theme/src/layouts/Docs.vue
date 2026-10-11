@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { DefaultTheme } from 'vitepress/theme'
 
-import type { Author } from '../functions/authors.data'
-
 import { tryCatch } from '@moeru/std'
 import { intlFormat } from 'date-fns'
 import { AnimatePresence, Motion } from 'motion-v'
@@ -18,14 +16,13 @@ import DocOutline from '../components/DocOutline.vue'
 import DocSidebar from '../components/DocSidebar.vue'
 import DocTopbar from '../components/DocTopbar.vue'
 
-import { isBetweenHalloweenAndHalfOfNovember } from '../composables/date'
+import { useThemeContext } from '../context'
 import { flatten } from '../utils/flatten'
-
-import * as authorsData from '../functions/authors.data'
 
 const { t } = useI18n()
 const { theme, frontmatter } = useData()
 const { path } = toRefs(useRoute())
+const themeContext = useThemeContext()
 
 /**
  * Normalizes a document route or sidebar link before matching.
@@ -105,7 +102,7 @@ const publishedAt = computed(() => {
 })
 
 const authors = computed(() => {
-  const data = (authorsData as unknown as { data: Array<{ url: string, authors: Author[] }> }).data
+  const data = themeContext.authors ?? []
   const currentPath = normalizeDocumentPath(path.value)
 
   return data.find(item =>
@@ -128,22 +125,7 @@ watch(path, () => {
       class="pointer-events-none absolute inset-0 left-0 top-0 z-0 h-max w-full flex justify-center overflow-hidden"
     >
       <div class="w-[108rem] flex flex-none justify-end">
-        <ClientOnly>
-          <img
-            v-if="isBetweenHalloweenAndHalfOfNovember(new Date())"
-            class="max-w-none w-[90rem] flex-none"
-            decoding="async"
-            src="/new-bg-halloween.avif"
-            alt="backdrop"
-          >
-          <img
-            v-else
-            class="max-w-none w-[90rem] flex-none"
-            decoding="async"
-            src="/new-bg.avif"
-            alt="backdrop"
-          >
-        </ClientOnly>
+        <slot name="doc-backdrop" />
       </div>
     </div>
 

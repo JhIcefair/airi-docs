@@ -6,7 +6,6 @@ import { useData, useRoute, withBase } from 'vitepress'
 import { computed, onMounted, toRefs, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import Home from '../components/Home.vue'
 import Navbar from '../components/Navbar.vue'
 import SearchTrigger from '../components/SearchTrigger.vue'
 import Docs from './Docs.vue'
@@ -54,7 +53,7 @@ watch(lang, () => locale.value = lang.value, { immediate: true })
               >
                 <img
                   class="w-6 md:w-9"
-                  alt="Project AIRI logo"
+                  :alt="`${title} logo`"
                   :src="logo"
                 >
                 <span class="translate-y-1 text-xl font-bold font-sans-rounded md:text-2xl">{{ title }}</span>
@@ -68,7 +67,7 @@ watch(lang, () => locale.value = lang.value, { immediate: true })
 
         <div v-if="layout === 'home'" class="w-full flex flex-1 flex-col justify-between">
           <main h-full w-full flex flex-1 flex-col justify-between>
-            <Home />
+            <slot name="home" />
           </main>
         </div>
 
@@ -77,7 +76,11 @@ watch(lang, () => locale.value = lang.value, { immediate: true })
         </div>
 
         <div v-else class="h-full max-w-[1440px] w-full grow">
-          <Docs />
+          <Docs>
+            <template #doc-backdrop>
+              <slot name="doc-backdrop" />
+            </template>
+          </Docs>
         </div>
       </div>
     </MotionConfig>

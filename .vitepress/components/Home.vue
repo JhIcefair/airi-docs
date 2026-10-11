@@ -12,7 +12,7 @@ import homeBackgroundChristmas20251224 from '../assets/home-cover-2025-12-24-bg.
 // cached or erased in dev/prod, causing the mask pattern to not show up.
 import homeBackgroundPatternGhost from '../assets/home-patterns-ghost.svg?no-inline'
 import homeBackgroundPatternLollipop from '../assets/home-patterns-lollipop.svg?no-inline'
-import HomeButtonSet from './HomeButtonSet.vue'
+import HomeButtonSet from '@proj-airi/vitepress-theme/components/HomeButtonSet.vue'
 import ParallaxCover from './ParallaxCover.vue'
 import ParallaxCoverChristmas20251224 from './ParallaxCoverChristmas20251224.vue'
 import ParallaxCoverHalloween20251029 from './ParallaxCoverHalloween20251029.vue'

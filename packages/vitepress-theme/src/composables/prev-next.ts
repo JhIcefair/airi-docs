@@ -1,7 +1,7 @@
 import { useData, withBase } from 'vitepress'
 import { computed } from 'vue'
 
-import { data as blogPosts } from '../functions/blog.data'
+import { useThemeContext } from '../context'
 import { getFlatSideBarLinks, getSidebar, isActive } from './sidebar'
 
 /**
@@ -12,6 +12,7 @@ import { getFlatSideBarLinks, getSidebar, isActive } from './sidebar'
  */
 export function usePrevNext() {
   const { page, theme, frontmatter, lang } = useData()
+  const { blogPosts = [] } = useThemeContext()
 
   return computed(() => {
     // Blog-specific navigation: ensure next/prev stay within same language blog directory

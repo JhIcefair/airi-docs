@@ -1,41 +1,23 @@
-import type { Theme } from 'vitepress'
+import type { PageAuthors } from '@proj-airi/vitepress-theme'
 
-import messages from '@proj-airi/i18n/locales'
+import { createTheme } from '@proj-airi/vitepress-theme'
 
-import { createI18n } from 'vue-i18n'
+import DocBackdrop from '../components/DocBackdrop.vue'
+import Home from '../components/Home.vue'
+import messages from '../locales'
 
-import ThemedVideo from '../components/ThemedVideo.vue'
-import Layout from '../custom/Layout.vue'
+import * as authorsData from '../functions/authors.data'
+import { data as blogPosts } from '../functions/blog.data'
 
-import '@unocss/reset/tailwind.css'
-import 'uno.css'
-import './style.css'
-import './theme-vitepress.css'
-import './theme-markdown.css'
-import './theme-media.css'
-import './theme-kbd.css'
-import './custom-nixie.css'
-import '@fontsource-variable/quicksand/index.css'
-import '@fontsource-variable/dm-sans/index.css'
-import '@fontsource/dm-mono/index.css'
-import '@fontsource/dm-serif-display/index.css'
-import '@fontsource-variable/comfortaa/index.css'
-
-export default {
-  Layout,
-  enhanceApp({ app, siteData }) {
+export default createTheme({
+  home: Home,
+  docBackdrop: DocBackdrop,
+  messages,
+  authors: (authorsData as unknown as { data: PageAuthors[] }).data,
+  blogPosts,
+  enhanceApp() {
     if (!import.meta.env.SSR && import.meta.env.PROD) {
       import('../modules/openpanel')
     }
-
-    const i18n = createI18n({
-      legacy: false,
-      locale: siteData.value.lang || 'en',
-      fallbackLocale: 'en',
-      messages,
-    })
-
-    app.use(i18n)
-    app.component('ThemedVideo', ThemedVideo)
   },
-} satisfies Theme
+})

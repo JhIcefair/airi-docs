@@ -19,7 +19,7 @@ import airiDemoOnboardingMobileLight from '../../../en/blog/DevLog-2025.08.05/as
 import airiDemoOnboardingMobileDark from '../../../en/blog/DevLog-2025.08.05/assets/airi-demo-onboarding-mobile-dark.mp4'
 import airiDocsLight from '../../../en/blog/DevLog-2025.08.05/assets/airi-docs-light.mp4'
 import airiDocsDark from '../../../en/blog/DevLog-2025.08.05/assets/airi-docs-dark.mp4'
-import Button from '../../../../.vitepress/components/Button.vue'
+import Button from '@proj-airi/vitepress-theme/components/Button.vue'
 
 function handleOpenLatest() {
   window.open('https://github.com/moeru-ai/airi/releases/latest', '_blank')

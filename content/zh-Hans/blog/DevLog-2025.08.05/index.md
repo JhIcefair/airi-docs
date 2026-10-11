@@ -10,7 +10,7 @@ preview-cover:
 ---
 
 <script setup lang="ts">
-import Button from '../../../../.vitepress/components/Button.vue'
+import Button from '@proj-airi/vitepress-theme/components/Button.vue'
 
 function handleOpenLatest() {
   window.open('https://github.com/moeru-ai/airi/releases/latest', '_blank')

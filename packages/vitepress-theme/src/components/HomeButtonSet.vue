@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ButtonItem } from '../theme/config'
+import type { ButtonItem } from '../config'
 
 import HomeButton from './HomeButton.vue'
 

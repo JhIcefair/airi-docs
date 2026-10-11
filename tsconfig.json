@@ -9,32 +9,28 @@
     ],
     "module": "esnext",
     "moduleResolution": "bundler",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "resolveJsonModule": true,
     "types": [
+      "node",
       "vitepress/client",
       "vue"
     ],
     "strict": true,
-    "declaration": false,
-    "outDir": "dist",
-    "sourceMap": true,
+    "noEmit": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
   "include": [
-    "/**/*.vue",
-    "components/**/*.vue",
-    ".vitepress/**/*.vue",
-    "/**/*.ts",
-    "/**/*.md",
     ".vitepress/**/*.ts",
-    ".vitepress/**/*.vue"
+    ".vitepress/**/*.vue",
+    "scripts/**/*.ts",
+    "packages/vitepress-theme/src/shims.d.ts",
+    "vite-env.d.ts",
+    "uno.config.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "packages/*/dist"
   ],
   "vueCompilerOptions": {
     "vitePressExtensions": [".md"]

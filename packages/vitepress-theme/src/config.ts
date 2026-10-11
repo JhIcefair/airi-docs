@@ -2,6 +2,16 @@ import type { DefaultTheme } from 'vitepress'
 
 interface ExtraThemeConfig {
   homepage: HomePageConfig
+  /**
+   * Links shown in the "Community" block next to the outline.
+   */
+  community?: CommunityLinks
+}
+
+export interface CommunityLinks {
+  github?: string
+  discord?: string
+  sponsor?: string
 }
 
 interface HomePageConfig {

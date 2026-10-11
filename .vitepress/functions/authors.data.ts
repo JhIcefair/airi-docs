@@ -1,19 +1,8 @@
+import type { Author, PageAuthors } from '@proj-airi/vitepress-theme'
+
 import { webcrypto } from 'node:crypto'
 
 import { createContentLoader } from 'vitepress'
-
-export interface Author {
-  role: string
-  kind: 'person' | 'team'
-
-  displayName: string
-
-  githubUsername?: string
-  githubEmail?: string
-
-  avatar?: string
-  avatarFallback: string
-}
 
 interface MarkdownAuthor {
   name?: string
@@ -54,7 +43,7 @@ async function newAvatarForAuthor(mappedAuthor?: { overrideAvatar?: string, gith
 }
 
 export default createContentLoader('**/*.md', {
-  async transform(raw): Promise<Array<{ url: string, authors: Author[] }>> {
+  async transform(raw): Promise<PageAuthors[]> {
     return (await Promise.all(
       raw
         .map(async ({ url, frontmatter }) => {

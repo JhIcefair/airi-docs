@@ -1,9 +1,10 @@
 import { OpenPanel } from '@openpanel/web'
-import { OPENPANEL_CONFIG } from '@proj-airi/stage-shared/analytics/openpanel'
+
+import { openpanel } from '../meta'
 
 if (!import.meta.env.DEV) {
   const panel = new OpenPanel({
-    ...OPENPANEL_CONFIG,
+    ...openpanel,
     trackScreenViews: true,
     trackOutgoingLinks: false,
     trackAttributes: false,
