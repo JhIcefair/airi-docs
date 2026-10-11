@@ -64,8 +64,28 @@ export function themeVitePlugins(options: ThemeVitePluginsOptions = {}): PluginO
     frontmatterAssets(),
     ...(options.gitChangelog
       ? [GitChangelog(gitChangelog), GitChangelogMarkdownSection(markdownSection)]
-      : []),
+      : [emptyGitChangelog()]),
   ]
+}
+
+const gitChangelogModuleId = 'virtual:nolebase-git-changelog'
+
+/**
+ * The theme always installs the changelog client, which imports this virtual
+ * module. Without `gitChangelog`, serve an empty changelog instead.
+ */
+function emptyGitChangelog(): PluginOption {
+  return {
+    name: `${themePackageName}:empty-git-changelog`,
+    resolveId(source) {
+      if (source === gitChangelogModuleId)
+        return `\0${gitChangelogModuleId}`
+    },
+    load(id) {
+      if (id === `\0${gitChangelogModuleId}`)
+        return `export default ${JSON.stringify({ commits: [], authors: [] })}`
+    },
+  }
 }
 
 /**

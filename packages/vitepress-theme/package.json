@@ -47,8 +47,8 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "typecheck": "vue-tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
-    "release": "bumpp && pnpm publish --access public"
+    "release": "bumpp --tag \"v%s\"",
+    "prepack": "pnpm run build"
   },
   "peerDependencies": {
     "unocss": ">=66.0.0",
