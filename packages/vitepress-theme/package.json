@@ -67,6 +67,7 @@
     "@mdit/plugin-footnote": "catalog:",
     "@mdit/plugin-tasklist": "catalog:",
     "@moeru/std": "catalog:",
+    "@nolebase/vitepress-plugin-git-changelog": "catalog:",
     "@proj-airi/unocss-preset-chromatic": "catalog:",
     "@radix-ui/colors": "catalog:",
     "@unocss/reset": "catalog:",

@@ -1,0 +1,31 @@
+/*
+ * Maps the VitePress default theme variables used by
+ * @nolebase/vitepress-plugin-git-changelog onto the theme colors.
+ *
+ * NOTICE: v2.21.0 of the plugin ships `client/theme/proj-airi.css` with the same mapping.
+ * Switch to it and drop this file once that version is published.
+ */
+.vp-nolebase-git-changelog {
+  --vp-c-brand-1: hsl(var(--primary));
+  --vp-c-text-1: hsl(var(--foreground));
+  --vp-c-text-2: hsl(var(--muted-foreground));
+  --vp-c-bg-soft: hsl(var(--background));
+  --vp-custom-block-details-bg: hsl(var(--muted) / 0.5);
+  --vp-custom-block-details-text: hsl(var(--foreground));
+  --vp-custom-block-font-size: 14px;
+
+  color: hsl(var(--foreground));
+}
+
+.vp-nolebase-git-changelog-title:hover {
+  color: hsl(var(--primary));
+}
+
+.vp-nolebase-git-changelog-last-edited-title,
+.vp-nolebase-git-changelog-view-full-history-title {
+  color: hsl(var(--muted-foreground));
+}
+
+.vp-nolebase-git-changelog-commit-avatar {
+  border: 2px solid hsl(var(--background));
+}

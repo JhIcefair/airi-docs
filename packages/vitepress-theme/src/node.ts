@@ -1,3 +1,4 @@
+import type { GitChangelogMarkdownSectionOptions } from '@nolebase/vitepress-plugin-git-changelog/vite'
 import type { PluginOption } from 'vite'
 import type { MarkdownOptions, PageData } from 'vitepress'
 
@@ -8,6 +9,7 @@ import yaml from 'unplugin-yaml/vite'
 import { postcssIsolateStyles } from 'vitepress'
 
 import { footnote } from '@mdit/plugin-footnote'
+import { GitChangelog, GitChangelogMarkdownSection } from '@nolebase/vitepress-plugin-git-changelog/vite'
 import { tasklist } from '@mdit/plugin-tasklist'
 
 import { frontmatterAssets } from './vite-frontmatter-assets'
@@ -16,12 +18,28 @@ export { frontmatterAssets }
 
 const themePackageName = '@proj-airi/vitepress-theme'
 
+type GitChangelogOptions = NonNullable<Parameters<typeof GitChangelog>[0]>
+
+export interface ThemeVitePluginsOptions {
+  /**
+   * Options of `@nolebase/vitepress-plugin-git-changelog`.
+   *
+   * Set it to render the contributors and the change history of each page from
+   * Git history. The build needs the full history (`fetch-depth: 0` in CI).
+   */
+  gitChangelog?: GitChangelogOptions & {
+    markdownSection?: GitChangelogMarkdownSectionOptions
+  }
+}
+
 /**
  * Vite plugins required by the theme.
  *
  * Add these to `vite.plugins` in the VitePress config, next to UnoCSS.
  */
-export function themeVitePlugins(): PluginOption[] {
+export function themeVitePlugins(options: ThemeVitePluginsOptions = {}): PluginOption[] {
+  const { markdownSection, ...gitChangelog } = options.gitChangelog ?? {}
+
   return [
     {
       name: `${themePackageName}:config`,
@@ -44,6 +62,9 @@ export function themeVitePlugins(): PluginOption[] {
     i18n({ runtimeOnly: true, compositionOnly: true, fullInstall: true, ssr: true }),
     yaml(),
     frontmatterAssets(),
+    ...(options.gitChangelog
+      ? [GitChangelog(gitChangelog), GitChangelogMarkdownSection(markdownSection)]
+      : []),
   ]
 }
 

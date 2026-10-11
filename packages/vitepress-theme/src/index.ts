@@ -4,6 +4,7 @@ import type { LocaleMessages, VueMessageType } from 'vue-i18n'
 
 import type { ThemeContext } from './context'
 
+import { NolebaseGitChangelogPlugin } from '@nolebase/vitepress-plugin-git-changelog/client'
 import { createI18n } from 'vue-i18n'
 import { h } from 'vue'
 
@@ -27,6 +28,8 @@ import '@fontsource-variable/dm-sans/index.css'
 import '@fontsource/dm-mono/index.css'
 import '@fontsource/dm-serif-display/index.css'
 import '@fontsource-variable/comfortaa/index.css'
+import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
+import './styles/git-changelog.css'
 
 export type { CommunityLinks, ButtonItem, Link, ThemeConfig } from './config'
 export type { Author, NavigationPost, PageAuthors, ThemeContext } from './context'
@@ -83,6 +86,8 @@ export function createTheme(options: ThemeOptions = {}): Theme {
 
       app.use(i18n)
       app.component('ThemedVideo', ThemedVideo)
+      // Renders nothing unless the site enables `gitChangelog` in `themeVitePlugins()`.
+      app.use(NolebaseGitChangelogPlugin)
       provideThemeContext(app, { authors: options.authors, blogPosts: options.blogPosts })
 
       await options.enhanceApp?.(ctx)

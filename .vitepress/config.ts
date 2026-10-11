@@ -12,6 +12,7 @@ import { defineConfig } from 'vitepress'
 
 import { webLive } from './constants'
 import { teamMembers } from './contributors'
+import { commitURLOf, gitAuthors, repoURLOf } from './git-changelog'
 import { airiVersion } from './version'
 import {
   discord,
@@ -959,7 +960,19 @@ export default defineConfig<ThemeConfig>({
   vite: {
     plugins: [
       unocss(),
-      themeVitePlugins(),
+      themeVitePlugins({
+        gitChangelog: {
+          repoURL: repoURLOf,
+          getCommitURL: commitURLOf,
+          include: ['content/**/*.md'],
+          mapAuthors: gitAuthors,
+          markdownSection: {
+            excludes: [],
+            // Skip the home pages, they render no article body.
+            exclude: id => /\/content\/[^/]+\/index\.md$/.test(id),
+          },
+        },
+      }),
     ],
   },
 })

@@ -44,7 +44,6 @@
     "@iconify-json/twemoji": "catalog:",
     "@moeru/eslint-config": "catalog:",
     "@napi-rs/image": "catalog:",
-    "@nolebase/vitepress-plugin-git-changelog": "catalog:",
     "@types/hast": "catalog:",
     "@types/markdown-it": "catalog:",
     "@types/node": "catalog:",
