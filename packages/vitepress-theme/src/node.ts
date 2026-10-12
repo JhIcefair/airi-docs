@@ -10,6 +10,7 @@ import { postcssIsolateStyles } from 'vitepress'
 
 import { footnote } from '@mdit/plugin-footnote'
 import { GitChangelog, GitChangelogMarkdownSection } from '@nolebase/vitepress-plugin-git-changelog/vite'
+import { PageProperties } from '@nolebase/vitepress-plugin-page-properties/vite'
 import { tasklist } from '@mdit/plugin-tasklist'
 
 import { frontmatterAssets } from './vite-frontmatter-assets'
@@ -62,6 +63,8 @@ export function themeVitePlugins(options: ThemeVitePluginsOptions = {}): PluginO
     i18n({ runtimeOnly: true, compositionOnly: true, fullInstall: true, ssr: true }),
     yaml(),
     frontmatterAssets(),
+    // Word count and reading time of each page, read by the docs layout.
+    PageProperties(),
     ...(options.gitChangelog
       ? [GitChangelog(gitChangelog), GitChangelogMarkdownSection(markdownSection)]
       : [emptyGitChangelog()]),

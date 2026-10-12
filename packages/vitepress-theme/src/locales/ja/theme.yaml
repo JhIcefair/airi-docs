@@ -16,6 +16,8 @@ doc:
   previous-page:
     title: 前のページ
   published-at: '{date} に公開'
+  last-edited: 最終更新
+  reading-time: '{n} 分'
 home:
   subtitle: >-
     Neuro-samaを再構築し、AIの推しやバーチャルキャラクターを現実の世界へと招く。

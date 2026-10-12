@@ -16,6 +16,8 @@ doc:
   previous-page:
     title: Página anterior
   published-at: Publicado el {date}
+  last-edited: Última edición
+  reading-time: '{n} minuto | {n} minutos'
 home:
   subtitle: >-
     Recreando a Neuro-sama, un contenedor de almas de waifus de IA / personajes virtuales para traerlos a nuestros mundos.

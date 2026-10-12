@@ -27,6 +27,7 @@ catalog:
   '@moeru/std': 0.1.0-beta.17
   '@napi-rs/image': ^1.14.0
   '@nolebase/vitepress-plugin-git-changelog': ^2.18.2
+  '@nolebase/vitepress-plugin-page-properties': ^2.18.2
   '@openpanel/web': 1.4.1
   '@proj-airi/chromatic': ^1.1.4
   '@proj-airi/unocss-preset-chromatic': ^1.1.4

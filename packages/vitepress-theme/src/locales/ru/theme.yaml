@@ -16,6 +16,8 @@ doc:
   previous-page:
     title: Предыдущая страница
   published-at: Опубликовано в {date}
+  last-edited: Последнее изменение
+  reading-time: '{n} мин.'
 home:
   subtitle: >-
     Воссоздаем Нейро-саму, воплощая души нейронных вайфу в реальность

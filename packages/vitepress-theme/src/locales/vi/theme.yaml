@@ -16,6 +16,8 @@ doc:
   previous-page:
     title: Trang trước
   published-at: Được phát hành vào ngày {date}
+  last-edited: Chỉnh sửa lần cuối
+  reading-time: '{n} phút'
 home:
   subtitle: >-
     Một nhân vật chứa linh hồn của AI waifu / VTuber nhân vật ảo để đưa họ vào thế giới của chúng ta.

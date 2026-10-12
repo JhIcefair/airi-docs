@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { DefaultTheme } from 'vitepress/theme'
 
-import { tryCatch } from '@moeru/std'
-import { intlFormat } from 'date-fns'
+import { Icon } from '@iconify/vue'
 import { AnimatePresence, Motion } from 'motion-v'
 import { AvatarFallback, AvatarImage, AvatarRoot } from 'reka-ui'
 import { Content, useData, useRoute, withBase } from 'vitepress'
@@ -16,6 +15,7 @@ import DocOutline from '../components/DocOutline.vue'
 import DocSidebar from '../components/DocSidebar.vue'
 import DocTopbar from '../components/DocTopbar.vue'
 
+import { usePageMeta } from '../composables/page-meta'
 import { useThemeContext } from '../context'
 import { flatten } from '../utils/flatten'
 
@@ -76,29 +76,29 @@ const isCommunityEnabled = computed(() => {
 
 const isCharactersPage = computed(() => path.value.includes('characters'))
 
-const publishedAt = computed(() => {
+const { lastEditedAt, publishedAt, readingTime, formatDate } = usePageMeta()
+
+/**
+ * Blog posts show the date they were published, other pages the date they were last edited.
+ */
+const pageDate = computed(() => {
   if (frontmatter.value.publishedAtOverride) {
-    return frontmatter.value.publishedAtOverride
+    return { label: String(frontmatter.value.publishedAtOverride), title: undefined, datetime: undefined }
   }
 
-  let date: string = ''
-  if (frontmatter.value.publishedAt) {
-    date = frontmatter.value.publishedAt
-  }
-  if (frontmatter.value.date) {
-    date = frontmatter.value.data
-  }
-  if (!date) {
+  const isPublished = publishedAt.value != null
+  const timestamp = isPublished ? publishedAt.value : lastEditedAt.value
+  if (timestamp == null) {
     return undefined
   }
 
-  const { data, error } = tryCatch(() => intlFormat(new Date(frontmatter.value.publishedAt), { dateStyle: 'long' }))
-  if (error) {
-    console.error('Error formatting publishedAt date:', error)
-    return undefined
+  return {
+    label: formatDate(timestamp)!,
+    title: isPublished
+      ? t('docs.theme.doc.published-at', { date: formatDate(timestamp) })
+      : `${t('docs.theme.doc.last-edited')} ${formatDate(timestamp)}`,
+    datetime: new Date(timestamp).toISOString(),
   }
-
-  return data
 })
 
 const authors = computed(() => {
@@ -160,15 +160,9 @@ watch(path, () => {
                 {{ pageTitle }}
               </h1>
 
-              <div v-if="publishedAt || authors && authors.length" class="mb-10 mt-5 flex flex-col gap-3 sm:gap-5">
-                <div v-if="publishedAt" class="text-neutral-400 dark:text-neutral-500">
-                  <span>
-                    {{ t('docs.theme.doc.published-at', { date: publishedAt }) }}
-                  </span>
-                </div>
-
-                <div class="flex flex-row gap-2 sm:gap-4">
-                  <!-- Authors -->
+              <div v-if="authors.length || pageDate || readingTime" class="not-prose mb-10 mt-5 flex flex-col gap-4">
+                <!-- Authors -->
+                <div v-if="authors.length" class="flex flex-row flex-wrap gap-x-6 gap-y-3">
                   <div v-for="(author, index) of authors" :key="index" class="flex flex-row items-center gap-2.5">
                     <AvatarRoot class="size-10 inline-flex select-none items-center justify-center overflow-hidden rounded-full bg-neutral-100 align-middle dark:bg-neutral-800">
                       <AvatarImage
@@ -190,17 +184,27 @@ watch(path, () => {
                       </AvatarFallback>
                     </AvatarRoot>
 
-                    <div class="flex flex-col">
-                      <div>
-                        <span>{{ author.displayName }}</span>
-                      </div>
-                      <div v-if="author.githubUsername">
-                        <a :href="`https://github.com/${author.githubUsername}`" target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:underline">
-                          <span>{{ author.githubUsername }}</span>
-                        </a>
-                      </div>
+                    <div class="flex flex-col gap-0.5 leading-tight">
+                      <span class="font-semibold">{{ author.displayName }}</span>
+                      <a
+                        v-if="author.githubUsername"
+                        :href="`https://github.com/${author.githubUsername}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-xs text-primary hover:underline"
+                      >@{{ author.githubUsername }}</a>
                     </div>
                   </div>
+                </div>
+
+                <!-- Date and reading time -->
+                <div v-if="pageDate || readingTime" class="flex flex-row items-center gap-3 text-sm text-neutral-500 font-mono dark:text-neutral-400">
+                  <time v-if="pageDate" :datetime="pageDate.datetime" :title="pageDate.title">{{ pageDate.label }}</time>
+                  <span v-if="pageDate && readingTime" aria-hidden="true">|</span>
+                  <span v-if="readingTime" class="inline-flex items-center gap-1.5">
+                    <Icon icon="lucide:clock" class="size-4" />
+                    {{ t('docs.theme.doc.reading-time', readingTime) }}
+                  </span>
                 </div>
               </div>
 

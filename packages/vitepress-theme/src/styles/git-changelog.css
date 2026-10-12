@@ -29,3 +29,23 @@
 .vp-nolebase-git-changelog-commit-avatar {
   border: 2px solid hsl(var(--background));
 }
+
+/* Avatars sit inside `.prose`, which adds a vertical margin to every image. */
+.vp-nolebase-git-changelog img {
+  margin: 0;
+}
+
+/* Same distance from the heading as the history block below. */
+.vp-nolebase-git-changelog-contributors {
+  padding-top: 0;
+}
+
+.vp-nolebase-git-changelog-contributors > a,
+.vp-nolebase-git-changelog-contributors > div {
+  font-weight: 600;
+}
+
+.vp-nolebase-git-changelog-history {
+  border-radius: 0.875rem;
+  padding: 0.625rem 0.875rem;
+}
