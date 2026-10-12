@@ -18,9 +18,9 @@ function listExtractedCommits(): Set<string> {
     const out = execFileSync('git', ['rev-list', extractedFromAiriHead], { encoding: 'utf-8' })
     return new Set(out.split('\n').filter(Boolean))
   }
-  catch (error) {
+  catch {
     // Shallow clones do not have the extracted history, so there is nothing to map.
-    console.warn('Failed to list the commits extracted from moeru-ai/airi:', error)
+    console.warn('Commits extracted from moeru-ai/airi are not in this clone, #refs in changelogs link to moeru-ai/airi-docs.')
     return new Set()
   }
 }

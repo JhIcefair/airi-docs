@@ -1,0 +1,34 @@
+name: Notify AIRI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  dispatch:
+    name: Redeploy airi.moeru.ai/docs
+    runs-on: ubuntu-latest
+    steps:
+      # Needs a token with `contents: write` on moeru-ai/airi, for example a fine-grained PAT
+      # or a GitHub App token stored as the AIRI_DISPATCH_TOKEN secret.
+      - name: Check token
+        id: token
+        env:
+          AIRI_DISPATCH_TOKEN: ${{ secrets.AIRI_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$AIRI_DISPATCH_TOKEN" ]; then
+            echo "::warning::AIRI_DISPATCH_TOKEN is not set, skipping the redeploy of moeru-ai/airi."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.token.outputs.present == 'true'
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.AIRI_DISPATCH_TOKEN }}
+          repository: moeru-ai/airi
+          event-type: airi-docs-updated
+          client-payload: '{"sha": "${{ github.sha }}"}'
