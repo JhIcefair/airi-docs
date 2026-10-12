@@ -58,7 +58,7 @@ watch(path, () => {
           :key="tab.label"
           :href="tab.link"
           :class="{ '!after:bg-primary !text-foreground': isTabActive(tab) }"
-          class="relative mx-4 h-full inline-flex items-center py-2 text-sm text-muted-foreground font-semibold after:absolute after:bottom-0 after:h-0.5 after:w-full hover:border-b-muted after:rounded-t-full after:bg-transparent hover:text-foreground after:content-['']"
+          class="relative mx-4 h-full inline-flex items-center py-2 text-sm text-muted-foreground font-semibold outline-none after:absolute after:bottom-0 after:h-0.5 after:w-full hover:border-b-muted after:rounded-t-full after:bg-transparent focus-visible:text-foreground hover:text-foreground after:content-['']"
           transition-colors duration-200 ease-in-out
         >
           <Icon

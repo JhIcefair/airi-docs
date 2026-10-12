@@ -79,9 +79,21 @@ const isCharactersPage = computed(() => path.value.includes('characters'))
 const { lastEditedAt, publishedAt, readingTime, formatDate } = usePageMeta()
 
 /**
+ * Date and reading time belong to the article header, so pages without a title, such as
+ * the blog index, do not show them. `pageMeta: false` in frontmatter hides them as well.
+ */
+const isPageMetaEnabled = computed(() => !!frontmatter.value.title && frontmatter.value.pageMeta !== false)
+
+/**
  * Blog posts show the date they were published, other pages the date they were last edited.
  */
+const pageReadingTime = computed(() => isPageMetaEnabled.value ? readingTime.value : undefined)
+
 const pageDate = computed(() => {
+  if (!isPageMetaEnabled.value) {
+    return undefined
+  }
+
   if (frontmatter.value.publishedAtOverride) {
     return { label: String(frontmatter.value.publishedAtOverride), title: undefined, datetime: undefined }
   }
@@ -160,7 +172,7 @@ watch(path, () => {
                 {{ pageTitle }}
               </h1>
 
-              <div v-if="authors.length || pageDate || readingTime" class="not-prose mb-10 mt-5 flex flex-col gap-4">
+              <div v-if="authors.length || pageDate || pageReadingTime" class="not-prose mb-10 mt-5 flex flex-col gap-4">
                 <!-- Authors -->
                 <div v-if="authors.length" class="flex flex-row flex-wrap gap-x-6 gap-y-3">
                   <div v-for="(author, index) of authors" :key="index" class="flex flex-row items-center gap-2.5">
@@ -198,12 +210,12 @@ watch(path, () => {
                 </div>
 
                 <!-- Date and reading time -->
-                <div v-if="pageDate || readingTime" class="flex flex-row items-center gap-3 text-sm text-neutral-500 font-mono dark:text-neutral-400">
+                <div v-if="pageDate || pageReadingTime" class="flex flex-row items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
                   <time v-if="pageDate" :datetime="pageDate.datetime" :title="pageDate.title">{{ pageDate.label }}</time>
-                  <span v-if="pageDate && readingTime" aria-hidden="true">|</span>
-                  <span v-if="readingTime" class="inline-flex items-center gap-1.5">
-                    <Icon icon="lucide:clock" class="size-4" />
-                    {{ t('docs.theme.doc.reading-time', readingTime) }}
+                  <span v-if="pageDate && pageReadingTime" aria-hidden="true">·</span>
+                  <span v-if="pageReadingTime" class="inline-flex items-center gap-1">
+                    <Icon icon="lucide:clock" class="size-3.5" />
+                    {{ t('docs.theme.doc.reading-time', pageReadingTime) }}
                   </span>
                 </div>
               </div>
