@@ -15,6 +15,9 @@ import themeMessages from './locales'
 import { provideThemeContext } from './context'
 
 import '@unocss/reset/tailwind.css'
+// NOTICE: the changelog plugin ships prebuilt utilities such as `.hidden`. They must come
+// before `uno.css`, otherwise they override responsive variants like `md:flex`.
+import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
 // Provided by the UnoCSS Vite plugin of the site, see `@proj-airi/vitepress-theme/unocss`.
 import 'uno.css'
 import './styles/style.css'
@@ -23,13 +26,12 @@ import './styles/theme-markdown.css'
 import './styles/theme-media.css'
 import './styles/theme-kbd.css'
 import './styles/custom-nixie.css'
+import './styles/git-changelog.css'
 import '@fontsource-variable/quicksand/index.css'
 import '@fontsource-variable/dm-sans/index.css'
 import '@fontsource/dm-mono/index.css'
 import '@fontsource/dm-serif-display/index.css'
 import '@fontsource-variable/comfortaa/index.css'
-import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
-import './styles/git-changelog.css'
 
 export type { CommunityLinks, ButtonItem, Link, ThemeConfig } from './config'
 export type { Author, NavigationPost, PageAuthors, ThemeContext } from './context'
