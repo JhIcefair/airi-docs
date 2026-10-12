@@ -87,8 +87,23 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-*:focus-visible {
-  @apply outline-primary;
+/*
+ * Focus rings follow keyboard navigation only, `data-input-modality` comes from
+ * composables/input-modality.ts. Text fields keep their own focus styles.
+ */
+:focus-visible {
+  outline: none;
+}
+
+html[data-input-modality='keyboard'] :focus-visible:not(input, textarea, [contenteditable='true'], [role='dialog']) {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Visually hidden controls, such as radio buttons styled through their label. */
+html[data-input-modality='keyboard'] label:has(> .sr-only:focus-visible) {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
 }
 
 ::selection {

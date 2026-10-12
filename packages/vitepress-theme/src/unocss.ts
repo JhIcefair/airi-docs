@@ -175,8 +175,7 @@ export function presetAiriTheme(): Preset<object> {
       'transition-opacity',
       'duration-200',
       'ease-in-out',
-      '[&_span]:focus:opacity-100',
-      '[&_span_>_span]:focus:outline',
+      '[&_span]:focus-visible:opacity-100',
     ],
     shortcuts: {
       'bg-gradient-radial': 'bg-gradient-radial-[var(--tw-gradient-stops)]',

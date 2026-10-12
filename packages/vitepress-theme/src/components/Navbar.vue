@@ -61,7 +61,7 @@ function isNavLinkActive(link: string, path: string) {
         :href="nav.link"
         :class="[
           'mx-3 h-full inline-flex items-center py-2 text-nowrap text-sm text-muted-foreground font-semibold hover:text-foreground',
-          'outline-none focus-visible:text-foreground',
+          'focus-visible:text-foreground',
           'transition-colors duration-200 ease-in-out',
           isNavLinkActive(nav.link, path) ? '!text-primary' : '',
         ]"

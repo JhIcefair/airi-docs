@@ -12,6 +12,7 @@ import ThemedVideo from './components/ThemedVideo.vue'
 import Layout from './layouts/Layout.vue'
 import themeMessages from './locales'
 
+import { trackInputModality } from './composables/input-modality'
 import { provideThemeContext } from './context'
 
 import '@unocss/reset/tailwind.css'
@@ -90,6 +91,7 @@ export function createTheme(options: ThemeOptions = {}): Theme {
       app.component('ThemedVideo', ThemedVideo)
       // Renders nothing unless the site enables `gitChangelog` in `themeVitePlugins()`.
       app.use(NolebaseGitChangelogPlugin)
+      trackInputModality()
       provideThemeContext(app, { authors: options.authors, blogPosts: options.blogPosts })
 
       await options.enhanceApp?.(ctx)
