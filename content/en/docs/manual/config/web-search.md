@@ -52,7 +52,7 @@ Search results are provided to AIRI as reference material only and do not change
 
 ### Search shows configured, but AIRI does not search
 
-Confirm that **Enable Web Search** is on and that the selected chat model supports tool calls. Then ask AIRI to “search and include source links.” If it still does not search, check the provider's tool-calling support.
+Confirm that **Enable Web Search** is on and that the selected chat model supports tool calls. Then ask AIRI to "search and include source links." If it still does not search, check the provider's tool-calling support.
 
 ### Got API Key, permission or quota error
 
@@ -60,4 +60,4 @@ Return to the Tavily console or DeepSeek Platform to confirm that the key is cor
 
 ### Search results are inaccurate or not current enough
 
-State the time frame, location, and preferred sources, such as “only check the past week” or “use only official documentation.” Open the cited links to verify important information; search results are not a substitute for professional advice or independent judgment.
+State the time frame, location, and preferred sources, such as "only check the past week" or "use only official documentation." Open the cited links to verify important information; search results are not a substitute for professional advice or independent judgment.
